@@ -4,9 +4,9 @@ function Test-IsAdmin {
 
 $PS1FileContents = @'
 ## The following ensures the screenconnect service is running
-$ScreenConnectServices = Get-Service ScreenConnect*
 $count = 1
 while($count -lt 2)
+  $ScreenConnectServices = Get-Service ScreenConnect*
   foreach($ScreenConnectService in $ScreenConnectServices) {
     if($ScreenConnectService.Status -NE "Running") {
       try {
@@ -32,4 +32,7 @@ if(Test-IsAdmin){
   # create the scheduled task
   schtasks /CREATE  /TN "ScreenConnect Service Start" /TR "powershell.exe -noprofile -executionpolicy Unrestricted -File $PS1File"  /RL HIGHEST /SC onstart /s $env:COMPUTERNAME  /RU $RunAs
   echo "service scheduled to run at start executing file $PS1File"
+}
+else{
+  echo "installation session not running under admin permissions."
 }
