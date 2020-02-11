@@ -1,5 +1,6 @@
-## The following ensures the screenconnect service is running
 
+$PS1FileContents = @'
+## The following ensures the screenconnect service is running
 $ScreenConnectServices = Get-Service ScreenConnect*
 
 foreach($ScreenConnectService in $ScreenConnectServices) {
@@ -13,3 +14,12 @@ foreach($ScreenConnectService in $ScreenConnectServices) {
     }
   }
 }
+'@
+$PS1File = C:\ScreenConnectStartup.ps1
+$PS1FileContents | Out-File $PS1File -NoClobber:$false -Force
+
+
+# set the account which will be run under
+$RunAs = 'NT AUTHORITY\SYSTEM'
+# create the scheduled task
+schtasks /CREATE  /TN "ScreenConnect Service Start" /TR "powershell.exe -noprofile -executionpolicy Unrestricted -File $PS1File"  /RL HIGHEST /SC onstart
