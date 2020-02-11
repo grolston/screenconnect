@@ -13,7 +13,7 @@ while($count -lt 2)
         Start-Service $ScreenConnectService -ErrorAction Stop
       }
       catch {
-        sleep -Seconds 20
+        sleep -Seconds 15
         Start-Service $ScreenConnectService
       }
     }
