@@ -24,8 +24,8 @@ while($count -lt 2)
 
 if(Test-IsAdmin){
   echo "running installer as admin"
-  $PS1File = C:\ScreenConnectStartup.ps1
-  $PS1FileContents | Out-File $PS1File -NoClobber:$false -Force
+  $PS1File = 'C:\ScreenConnectStartup.ps1'
+  $PS1FileContents | Out-File -FilePath $PS1File -NoClobber:$false -Force
   echo "new $PS1File created."
   # set the account which will be run under
   $RunAs = 'NT AUTHORITY\SYSTEM'
